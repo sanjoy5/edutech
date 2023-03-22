@@ -14,11 +14,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
 
     {% include 'navbar.html' %}
+
+    {% if messages %}
+    <ul id="messages" class="absolute top-20 right-0 md:right-4 max-w-sm w-full">
+        {% for message in messages %}
+        <li{% if message.tags %} class="alert alert-{{ message.tags }} shadow-lg" {% endif %}>
+            <div class="w-full flex items-center justify-between">
+                <span>{{ message }}</span>
+                <i onclick="dhide()" class="fa fa-times ml-2 text-xl cursor-pointer"></i>
+            </div>
+
+            </li>
+
+            {% endfor %}
+    </ul>
+
+    {% endif %}
+
     {% block content %}
 
 
@@ -27,6 +45,7 @@
 
 
 
+    <script src="{% static 'js/main.js' %}"></script>
 
 </body>
 

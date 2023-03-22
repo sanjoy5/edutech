@@ -4,27 +4,11 @@
 
 {% block content %}
 
-<!-- <h1>Home Page</h1>
-
-{% for course in courses %}
-
-<div>
-    <a href=""> @{{course.instructor}} </a>
-
-    <a href="">
-        <h3>{{course.title}}</h3>
-    </a>
-    <p>{{course.description | slice:"50"}}<a href="">...See more</a></p>
-
-    <p>{{course.topic}}</p>
-    <hr>
-</div> -->
-
-<!-- {% endfor %} -->
-
 <div class="px-1 md:px-12 m-0 md:m-6">
 
     <div class="flex flex-col md:flex-row gap-4">
+
+        <!-- Course Topic Start  -->
 
         <div class=" rounded hidden md:block p-3 w-1/4">
             <h2 class="text-xl uppercase font-medium text-center pb-3">Course Topics</h2>
@@ -48,15 +32,20 @@
 
         </div>
 
+        <!-- Course Topic End  -->
+
         <div class=" rounded p-3 w-full md:w-2/4">
             <div class="flex flex-col md:flex-row items-center justify-between text-center md:text-start">
                 <div class="">
                     <h2 class="text-xl font-medium uppercase">Your Courses</h2>
                     <p class="pb-3">Total <span class="text-primary">{{total_course}}</span> courses are available</p>
                 </div>
-                <a href="" class="btn bg-slate-800 hover:bg-slate-700"><i class="fa fa-plus pr-1"></i>Publish Course</a>
+                <a href="{% url 'create_course' %}" class="btn bg-slate-800 hover:bg-slate-700"><i
+                        class="fa fa-plus pr-1"></i>Publish Course</a>
             </div>
 
+
+            <!-- Course Feed section Start  -->
 
             {% for course in courses %}
 
@@ -71,18 +60,19 @@
                     </div>
 
                 </div>
-                <a href="" class="text-xl font-medium">{{course.title}}</a>
-                <p class="text-base mt-2">{{course.description|slice:"120"}} <a href="" class="text-primary">...See
+                <a href="{% url 'course' course.id %}" class="text-xl font-medium">{{course.title}}</a>
+                <p class="text-base mt-2">{{course.description|slice:"120"}} <a href="{% url 'course' course.id %}"
+                        class="text-primary">...See
                         More</a>
                 </p>
-                <a href="">
-                    <img src="{% static 'images/demo.png' %}" class="my-4 h h-full max-h-80 object-cover w-full" alt="">
+                <a href="{% url 'course' course.id %}">
+                    <img src="{{course.image.url}}" class="my-4 h h-full max-h-80 object-cover w-full" alt="">
                 </a>
                 <hr>
                 <div class="flex items-center justify-between mt-3">
                     <div class="text-lg">
                         <i class="fas fa-users"></i>
-                        <span class="pl-1">5 Joined</span>
+                        <span class="pl-1">{{course.students.count}} Joined</span>
                     </div>
                     <p class="px-3 py-2 bg-slate-500 rounded-full text-white text-sm">{{course.topic.name}}</p>
                 </div>
@@ -91,7 +81,12 @@
 
             {% endfor %}
 
+            <!-- Course section feed end -->
+
         </div>
+
+        <!-- Activity Section Start  -->
+
         <div class=" rounded p-3 hidden md:block w-1/4">
             <h2 class="text-xl font-medium text-center pb-3 uppercase">Recent Activities</h2>
 
@@ -109,9 +104,10 @@
 
                     </div>
 
-                    <a href=""><i class="fa fa-times text-xl text-rose-500"></i></a>
+                    <a href="{% url 'delete_chat' chat.id %}"><i class="fa fa-times text-xl text-rose-500"></i></a>
                 </div>
-                <p class="">replied to course “<a href="" class="text-primary text-md">{{chat.course.title}}</a>”</p>
+                <p class="">replied to course “<a href="{% url 'course' chat.course.id %}"
+                        class="text-primary text-md">{{chat.course.title}}</a>”</p>
 
                 <div class="bg-slate-100 px-2 py-2 md:py-3 md:px-4 rounded mt-3">
                     {{chat.body}}
@@ -120,6 +116,19 @@
             {% endfor %}
 
         </div>
+
+        <!-- Activity Section end  -->
+
+
+        <!-- Modal  -->
+
+
+
+
+        <!-- Put this part before </body> tag -->
+
+
+
 
 
 

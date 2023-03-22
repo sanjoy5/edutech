@@ -14,7 +14,8 @@ class Course(models.Model):
     topic = models.ForeignKey(Topic,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=200,null=True)
     description = models.TextField(null=True,blank=True) 
-    # students = 
+    image = models.ImageField(upload_to="course_imgs/",default="demo.png",null=True,blank=True)
+    students = models.ManyToManyField(User,related_name='students',blank=True,null=True)
     update = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
