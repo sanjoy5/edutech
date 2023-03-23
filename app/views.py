@@ -5,8 +5,32 @@ from django.db.models import Q
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
+
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    if request.method == 'POST':
+        email = request.POST['email'].lower()
+        password = request.POST['password']
+        
+        user = authenticate(request,email=email,password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request,'Login successfully')
+            return redirect('home')
+        else:
+            messages.error(request,'email or password invalid!!!')
+
+    return render(request,'login.html')
+
+
+def logoutPage(request):
+    logout(request)
+    messages.success(request,'Logout Successfully')
+    return redirect('login')
 
 def homePage(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -15,7 +39,7 @@ def homePage(request):
         Q(title__icontains=q) |
         Q(description__icontains=q) 
     )
-    topics = Topic.objects.all()
+    topics = Topic.objects.all()[:5]
     chats = Chat.objects.filter(Q(course__topic__name__icontains=q))
     total_course = courses.count()
     
@@ -104,3 +128,16 @@ def deleteChat(request,pk):
         return redirect('home')
     context = {'obj':chat}
     return render(request,'delete.html',context)
+
+
+def topicsPage(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    topics = Topic.objects.filter(name__icontains=q)
+
+    context = {'topics':topics}
+    return render(request,'app/topics.html',context)
+
+def activityPage(request):
+    chats = Chat.objects.all()
+    context = {'chats':chats}
+    return render(request,'app/activities.html',context)

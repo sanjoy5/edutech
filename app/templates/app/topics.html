@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Topics {% endblock %}
+{% block content %}
+
+<div class="w-full lg:w-2/4 mx-auto my-6 lg:my-12">
+    <div class="mx-2 bg-white myshadow rounded py-6 lg:py-10 px-4 lg:px-10">
+        <div class="flex items-center">
+            <a href="{% url 'home' %}" class="">
+                <i class="fa fa-arrow-left text-md text-primary px-3 py-3 rounded-full bg-base-200"></i>
+            </a>
+            <h2 class="text-xl uppercase font-medium ml-5">All Topics</h2>
+        </div>
+        <div class="my-5">
+            <form action="" method="GET">
+                <input name="q" type="text" class="border outline-none px-3 lg:px-5 py-3 w-full text-lg rounded"
+                    placeholder="Search for Topics...">
+            </form>
+        </div>
+
+        <div class="my-5 flex items-center justify-between">
+            <a href="{% url 'home' %}" class="text-md hover:text-primary">All</a>
+            <p class="bg-slate-500 py-1 px-3 text-white text-center">{{topics.count}}</p>
+        </div>
+        {% for topic in topics %}
+        <div class="my-5 flex items-center justify-between">
+            <a href="{% url 'home' %}?q={{topic.name}}" class="text-md hover:text-primary">{{topic.name}}</a>
+            <p class="bg-slate-500 py-1 px-3 text-white text-center">{{topic.course_set.all.count}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

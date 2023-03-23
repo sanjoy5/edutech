@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Activities {% endblock %}
+
+{% block content %}
+
+<div class="w-full lg:w-2/4 mx-auto my-6 lg:my-12">
+    <div class="mx-2 bg-white myshadow rounded py-6 lg:py-10 px-4 lg:px-10">
+        <div class="flex items-center">
+            <a href="{% url 'home' %}" class="">
+                <i class="fa fa-arrow-left text-md text-primary px-3 py-3 rounded-full bg-base-200"></i>
+            </a>
+            <h2 class="text-xl uppercase font-medium ml-5">All Activities</h2>
+        </div>
+
+        {% for chat in chats %}
+        <div class="border my-4 px-4 py-3 rounded">
+            <div class="flex justify-between items-center">
+                <div class="mb-3 flex items-center">
+                    <a href="" class="">
+                        <img src="{% static 'images/user.png' %}" class="w-10 h-10 rounded-full mr-2" alt="">
+                    </a>
+                    <div>
+                        <a href="" class="text-lg text-primary">@{{chat.user.username}}</a>
+                        <p class="text-sm">{{chat.created | timesince}} ago</p>
+                    </div>
+
+                </div>
+
+                <a href="{% url 'delete_chat' chat.id %}"><i class="fa fa-times text-xl text-rose-500"></i></a>
+            </div>
+            <p class="">replied to course “<a href="{% url 'course' chat.course.id %}"
+                    class="text-primary text-md">{{chat.course.title}}</a>”</p>
+
+            <div class="bg-slate-100 px-2 py-2 md:py-3 md:px-4 rounded mt-3">
+                {{chat.body}}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

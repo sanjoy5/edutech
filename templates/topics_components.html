@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class=" rounded hidden md:block p-3 w-1/4">
+    <h2 class="text-xl uppercase font-medium text-center pb-3">Course Topics</h2>
+
+    <div class="my-5 flex items-center justify-between">
+        <a href="{% url 'home' %}" class="text-md hover:text-primary">All</a>
+        <p class="bg-slate-500 py-1 px-3 text-white text-center">{{topics.count}}</p>
+    </div>
+    {% for topic in topics %}
+    <div class="my-5 flex items-center justify-between">
+        <a href="{% url 'home' %}?q={{topic.name}}" class="text-md hover:text-primary">{{topic.name}}</a>
+        <p class="bg-slate-500 py-1 px-3 text-white text-center">{{topic.course_set.all.count}}</p>
+    </div>
+    {% endfor %}
+    <div class="flex items-center justify-between mt-3">
+        <a href="{% url 'topics' %}" class="text-md text-primary">See More</a>
+        <a href="{% url 'topics' %}" class="p-1 text-center text-lg text-primary">
+            >>
+        </a>
+    </div>
+
+</div>
