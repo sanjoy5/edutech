@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="px-1 md:px-12 m-0 md:m-6">
+<div class="px-2 md:px-12 m-0 md:m-6">
 
     <div class="flex flex-col md:flex-row gap-4">
 
@@ -27,39 +27,7 @@
 
             <!-- Course Feed section Start  -->
 
-            {% for course in courses %}
-
-            <div class="my-5 px-4 py-3 md:px-8 md:py-6 rounded-lg bg-white myshadow">
-                <div class="mb-3 flex items-center">
-                    <a href="" class="">
-                        <img src="{% static 'images/user.png' %}" class="w-10 h-10 rounded-full mr-2" alt="">
-                    </a>
-                    <div>
-                        <a href="" class="text-lg text-primary">@{{course.instructor}}</a>
-                        <p class="text-sm">{{course.created | timesince}} ago</p>
-                    </div>
-
-                </div>
-                <a href="{% url 'course' course.id %}" class="text-xl font-medium">{{course.title}}</a>
-                <p class="text-base mt-2">{{course.description|slice:"120"}} <a href="{% url 'course' course.id %}"
-                        class="text-primary">...See
-                        More</a>
-                </p>
-                <a href="{% url 'course' course.id %}">
-                    <img src="{{course.image.url}}" class="my-4 h h-full max-h-80 object-cover w-full" alt="">
-                </a>
-                <hr>
-                <div class="flex items-center justify-between mt-3">
-                    <div class="text-lg">
-                        <i class="fas fa-users"></i>
-                        <span class="pl-1">{{course.students.count}} Joined</span>
-                    </div>
-                    <p class="px-3 py-2 bg-slate-500 rounded-full text-white text-sm">{{course.topic.name}}</p>
-                </div>
-            </div>
-
-
-            {% endfor %}
+            {% include 'course_components.html' %}
 
             <!-- Course section feed end -->
 
@@ -70,19 +38,6 @@
         {% include 'activity_components.html' %}
 
         <!-- Activity Section end  -->
-
-
-        <!-- Modal  -->
-
-
-
-
-        <!-- Put this part before </body> tag -->
-
-
-
-
-
 
     </div>
 

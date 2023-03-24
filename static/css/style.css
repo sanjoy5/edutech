@@ -16,7 +16,7 @@
 }
 
 .form__group {
-    margin-bottom: 20px;
+    margin-top: 20px;
     width: 100%;
 }
 
@@ -24,7 +24,7 @@
 .form__group label {
     display: block;
     font-size: 20px;
-    margin-bottom: 10px;
+
     /* text-transform: uppercase; */
 }
 
@@ -39,6 +39,7 @@
     color: #1E293B;
     font-weight: 500;
     outline: none;
+    margin-top: 6px;
 }
 
 .form__group input:focus,

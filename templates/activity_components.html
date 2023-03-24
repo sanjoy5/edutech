@@ -4,14 +4,14 @@
     <h2 class="text-xl font-medium text-center pb-3 uppercase">Recent Activities</h2>
 
     {% for chat in chats %}
-    <div class="border my-4 px-4 py-3 rounded">
+    <div class="myshadow bg-white my-4 px-4 py-3 rounded">
         <div class="flex justify-between items-center">
             <div class="mb-3 flex items-center">
-                <a href="" class="">
-                    <img src="{% static 'images/user.png' %}" class="w-10 h-10 rounded-full mr-2" alt="">
+                <a href="{% url 'profile' chat.user.id %}" class="">
+                    <img src="{{chat.user.avatar.url}}" class="w-10 h-10 rounded-full mr-2" alt="">
                 </a>
                 <div>
-                    <a href="" class="text-lg text-primary">@{{chat.user.username}}</a>
+                    <a href="{% url 'profile' chat.user.id %}" class="text-lg text-primary">@{{chat.user.username}}</a>
                     <p class="text-sm">{{chat.created | timesince}} ago</p>
                 </div>
 

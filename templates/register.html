@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Login {% endblock %}
+{% block content %}
+
+<div class="w-full lg:w-2/4 mx-auto my-12">
+    <div class="bg-white myshadow rounded py-6 lg:py-10 px-4 lg:px-8 mx-2">
+        <h2 class="text-center text-xl uppercase font-medium">Register Here</h2>
+
+        <form action="" class="my-5 lg:my-8" method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="form__group">
+                <label>{{field.label}}</label>
+                {{field}}
+            </div>
+
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+
+            {% endfor %}
+
+            <button class="btn bg-slate-800 hover:bg-slate-700 mt-4" type="submit">Register</button>
+
+        </form>
+
+        <div class="text-center">
+            <p class="tex-md">Already have an account?</p>
+            <a href="{% url 'login' %}" class="text-primary">Login</a>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+{% endblock %}

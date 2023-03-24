@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
+
+
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -31,6 +33,25 @@ def logoutPage(request):
     logout(request)
     messages.success(request,'Logout Successfully')
     return redirect('login')
+
+
+def registerPage(request):
+    form = MyUserCreationForm()
+    if request.user.is_authenticated:
+        return redirect('home')
+    if request.method == "POST":
+        form = MyUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request,user)
+            messages.success(request,'Login Successfully')
+            return redirect('home')
+        else:
+            messages.error(request,'An error occurred during registration')
+    context = {'form':form}
+    return render(request,'register.html',context)
 
 def homePage(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -128,6 +149,30 @@ def deleteChat(request,pk):
         return redirect('home')
     context = {'obj':chat}
     return render(request,'delete.html',context)
+
+
+def userProfile(request,pk):
+    user = User.objects.get(id=pk)
+    courses = user.course_set.all()
+    chats = user.chat_set.all()
+    topics = Topic.objects.all()[:5]
+
+    context = {'user':user,'courses':courses,'chats':chats,'topics':topics}
+    return render(request,'app/profile.html',context)
+
+def updateUser(request):
+    user = request.user
+    form = UserForm(instance=user)
+    if request.method == 'POST':
+        form = UserForm(request.POST,request.FILES,instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'User Profile Updated Successfully.')
+            return redirect('profile', pk=user.id)
+
+    context = {'form':form}
+    return render(request,'app/update_profile.html',context)
+
 
 
 def topicsPage(request):

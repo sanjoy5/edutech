@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Update Profile {% endblock %}
+{% block content %}
+
+<div class="w-full lg:w-2/4 mx-auto my-12">
+    <div class="bg-white myshadow rounded py-6 lg:py-10 px-4 lg:px-8 mx-2">
+        <a href="{{request.META.HTTP_REFERER}}">
+            <i class="fa fa-arrow-left text-md text-primary px-3 py-3 rounded-full bg-base-200"></i>
+        </a>
+        <h2 class="text-center text-xl uppercase font-medium">Update Your Profile</h2>
+
+        <form action="" class="my-5 lg:my-8" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div class="form__group">
+                <label>{{field.label}}</label>
+                {{field}}
+            </div>
+
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+
+            {% endfor %}
+
+            <button class="btn bg-slate-800 hover:bg-slate-700 mt-4" type="submit">Update Profile</button>
+
+        </form>
+
+
+    </div>
+
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% load static %}
+
+{% for course in courses %}
+
+<div class="my-5 px-4 py-3 md:px-8 md:py-6 rounded-lg bg-white myshadow">
+    <div class="mb-3 flex items-center">
+        <a href="" class="{% url 'profile' course.instructor.id %}">
+            <img src="{{course.instructor.avatar.url}}" class="w-10 h-10 rounded-full mr-2" alt="">
+        </a>
+        <div>
+            <a href="{% url 'profile' course.instructor.id %}"
+                class="text-lg text-primary">@{{course.instructor.username}}</a>
+            <p class="text-sm">{{course.created | timesince}} ago</p>
+        </div>
+
+    </div>
+    <a href="{% url 'course' course.id %}" class="text-xl font-medium">{{course.title}}</a>
+    <p class="text-base mt-2">{{course.description|slice:"120"}} <a href="{% url 'course' course.id %}"
+            class="text-primary">...See
+            More</a>
+    </p>
+    <a href="{% url 'course' course.id %}">
+        <img src="{{course.image.url}}" class="my-4 h h-full max-h-80 object-cover w-full" alt="">
+    </a>
+    <hr>
+    <div class="flex items-center justify-between mt-3">
+        <div class="text-lg">
+            <i class="fas fa-users"></i>
+            <span class="pl-1">{{course.students.count}} Joined</span>
+        </div>
+        <p class="px-3 py-2 bg-slate-500 rounded-full text-white text-sm">{{course.topic.name}}</p>
+    </div>
+</div>
+
+
+{% endfor %}
