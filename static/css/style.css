@@ -64,6 +64,10 @@
     padding: 0 10rem;
 }
 
+img {
+    object-fit: cover;
+}
+
 /* .messages {
     position: absolute;
     top: 80px;
